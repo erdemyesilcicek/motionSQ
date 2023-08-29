@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class squareMotion : MonoBehaviour
@@ -11,6 +12,8 @@ public class squareMotion : MonoBehaviour
     [SerializeField] GameObject gunPrefab;
     [SerializeField] float shotSpeed = 10f;
     private Vector2 moveDirection;
+    public float attackCooldown = 0.5f;
+    private bool canAttack = true;
     void Update()
     {
         Shooting();
@@ -35,11 +38,15 @@ public class squareMotion : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Circle"))
         {
+            Destroy(collision.gameObject);
             Destroy(gameObject);
         }
     }
     public void Shooting()
     {
+        if (!canAttack) return;
+        canAttack = false;
+
         Vector2 shotDirection = Vector2.zero;
 
         if (Input.GetKey(KeyCode.UpArrow))
@@ -57,5 +64,11 @@ public class squareMotion : MonoBehaviour
             GameObject shot = Instantiate(gunPrefab, shotPosition, Quaternion.identity);
             shot.GetComponent<Rigidbody2D>().velocity = shotDirection * shotSpeed;
         }
+        StartCoroutine(AttackCooldown());
+    }
+    IEnumerator AttackCooldown()
+    {
+        yield return new WaitForSeconds(attackCooldown);
+        canAttack = true;
     }
 }

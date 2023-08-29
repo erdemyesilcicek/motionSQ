@@ -10,6 +10,7 @@ public class GunController : MonoBehaviour
         if (collision.gameObject.CompareTag("Circle"))
         {
             Destroy(collision.gameObject);
+            Destroy(gameObject);
         }
     }
     private void OnBecameInvisible()

@@ -9,11 +9,13 @@ public class CircleController : MonoBehaviour
     [SerializeField] float circleSpeed;
     [SerializeField] float circleIncrease;
     [SerializeField] Transform squareLocation;
+    [SerializeField] float randomMinX, randomMaxX;
+    [SerializeField] float randomMinY, randomMaxY;
     public float waitingTime = 2f;
     private GameObject[] circles;
     private bool isStart = false;
     public float spawnInterval = 3f;
-    void Start()
+    public void Start()
     {
         circles = new GameObject[circleStartNumber];
         for (int i = 0; i < circleStartNumber; i++)
@@ -36,8 +38,8 @@ public class CircleController : MonoBehaviour
     }
     Vector2 RondomLocation()
     {
-        float x = Random.Range(-9f, 9f);
-        float y = Random.Range(14f, 17f);
+        float x = Random.Range(randomMinX, randomMaxX); // -9 - 9
+        float y = Random.Range(randomMinY, randomMaxY); // 14-17
         return new Vector2(x, y);
     }
     void Update()
