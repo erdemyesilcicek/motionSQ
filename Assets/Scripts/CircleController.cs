@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CircleController : MonoBehaviour
 {
+    public static int LiveCircles { get; set; } = 0;
     [SerializeField] GameObject circlePrefab;
     [SerializeField] int circleStartNumber;
     [SerializeField] float circleSpeed;
@@ -18,6 +19,7 @@ public class CircleController : MonoBehaviour
     public void Start()
     {
         circles = new GameObject[circleStartNumber];
+        LiveCircles += circles.Length;
         for (int i = 0; i < circleStartNumber; i++)
         {
             circles[i] = Instantiate(circlePrefab, RondomLocation(), Quaternion.identity);
@@ -48,6 +50,7 @@ public class CircleController : MonoBehaviour
     }
     public void FallowSquare()
     {
+        if (!squareMotion.IsDead)
         for (int i = 0; i < circles.Length; i++)
         {
             if (circles[i] != null)

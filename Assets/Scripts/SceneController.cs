@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using static Unity.Collections.AllocatorManager;
 
 public class SceneController : MonoBehaviour
 {
@@ -29,6 +26,8 @@ public class SceneController : MonoBehaviour
     public void toScene(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
+        squareMotion.IsDead = false;
+        CircleController.LiveCircles = 0;
     }
     public void toGameScene()
     {

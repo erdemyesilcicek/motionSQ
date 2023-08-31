@@ -7,6 +7,8 @@ using UnityEngine.UI;
 
 public class squareMotion : MonoBehaviour
 {
+    public static bool IsDead { get; set; } = false;
+
     [SerializeField] float moveSpeed;
     [SerializeField] Rigidbody2D squareRigidbody2D;
     [SerializeField] GameObject gunPrefab;
@@ -14,6 +16,8 @@ public class squareMotion : MonoBehaviour
     private Vector2 moveDirection;
     public float attackCooldown = 0.5f;
     private bool canAttack = true;
+    public SceneController controller;
+    public static int deadCircles { get; set; }
     void Update()
     {
         Shooting();
@@ -36,10 +40,13 @@ public class squareMotion : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Circle"))
+        if (collision.gameObject.CompareTag("Circle") && !IsDead)
         {
+            IsDead = true;
             Destroy(collision.gameObject);
             Destroy(gameObject);
+            SceneController.LastGameScene = SceneManager.GetActiveScene().buildIndex;
+            controller.toScene("Lose");
         }
     }
     public void Shooting()

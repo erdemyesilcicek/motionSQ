@@ -9,6 +9,7 @@ public class GameOver : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         SceneController.LastGameScene = SceneManager.GetActiveScene().buildIndex;
+        Debug.Log(SceneController.LastGameScene);
         manager = GameObject.FindAnyObjectByType<SceneController>();
         manager.toScene("Lose");
     }
